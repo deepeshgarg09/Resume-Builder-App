@@ -18,12 +18,12 @@ amazon:
 google:
   service: GCS
   project: Resume-Builder-App
-  credentials: <%= ENV['GOOGLE_APPLICATION_CREDENTIALS'].as_json %>
+  credentials: <%= Rails.root.join("config/secrets/resume-builder-app-339513-1e63be542bfb.json") %>
   bucket: resume-builder-bucket-123456
 
 google_dev:
   service: GCS
-  project: todo-pic
+  project: Resume-Builder-App
   credentials: <%= Rails.root.join("config/secrets/resume-builder-app-339513-1e63be542bfb.json") %>
   bucket: resume-builder-bucket-123456
 
