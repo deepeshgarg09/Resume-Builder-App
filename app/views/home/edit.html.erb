@@ -1,0 +1,60 @@
+<%= render 'shared/header' %>
+
+<main class="py-10 max-w-7xl mx-auto px-4 sm:px-8">
+    <%= form_with model: @profile, url: edit_path, builder: TailwindInputBuilder do |f| %>
+        <div class="flex justify-end items-center w-full mb-4">
+            <div>
+                <%= f.submit "Save", class: "flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-green-200" %><br/>
+            </div>
+        </div>
+
+        <%= render 'shared/edit_section', title: "Profile details" do %>
+            <%= f.text_field :name, value: @profile.name || current_user.name, placeholder: "Name" %><br/>
+            <p></p> <br>
+            <strong><h4>Upload Profile Image</h4></strong>
+            <div class="flex items-center my-4">
+               
+               <%= f.file_field :avatar, class: "py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg" %><br/>
+            </div>
+            
+            <%= f.text_field :job_title, value: @profile.job_title, placeholder: "Job title" %><br/>
+            <%= f.text_field :total_experience, value: @profile.total_experience, placeholder: "Total experience" %><br/>
+            <%= f.text_area :overview, value: @profile.overview, placeholder: "Profile overview", required: true %><br/>
+            <p>Career Highlights</p>
+            <%= f.text_field :career_highlights, value: concat_str_with_comma(@profile.career_highlights), placeholder: "Career highlights" %>
+            <%= render 'shared/multiple_inputs_message' %>
+            
+            <p>Primary Skills</p>
+            <%= f.text_field :primary_skills, value: concat_str_with_comma(@profile.primary_skills), placeholder: "Primary skills" %>
+            <%= render 'shared/multiple_inputs_message' %>
+            
+            <p>Secondary Skills</p>
+            <%= f.text_field :secondary_skills, value: concat_str_with_comma(@profile.secondary_skills), placeholder: "Secondary skills" %>
+            <%= render 'shared/multiple_inputs_message' %>
+            
+        <% end %>
+
+        <%= render 'shared/edit_section', title: "Education" do %>
+            <%= f.fields_for :educations do |education| %>
+                <%= render 'shared/input/education', education: education %>
+            <% end %><br />
+            <%= render 'shared/input/buttons/add', label: "+ Add Education", path: "/educations/new" %><br/>
+        <% end %>
+
+        <%= render 'shared/edit_section', title: "Experience" do %>
+            <%= f.fields_for :experiences do |experience| %>
+                <%= render 'shared/input/experience', experience: experience %>
+            <% end %><br />
+            <%= render 'shared/input/buttons/add', label: "+ Add Experience", path: "/experiences/new" %><br/>
+        <% end %>
+
+        <%= render 'shared/edit_section', title: "Projects" do %>
+            <%= f.fields_for :projects do |project| %>
+                <%= render 'shared/input/project', project: project %>
+            <% end %><br />
+            <%= render 'shared/input/buttons/add', label: "+ Add Project", path: "/projects/new" %><br/>
+        <% end %>
+        
+    <% end %>
+
+</main>
